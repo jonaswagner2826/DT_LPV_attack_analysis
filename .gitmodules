@@ -1,0 +1,3 @@
+[submodule "simulink_in_code"]
+	path = simulink_in_code
+	url = https://github.com/jonaswagner2826/simulink_in_code.git
