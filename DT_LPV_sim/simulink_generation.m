@@ -16,8 +16,8 @@ close all
 %% Settings
 generateModel = true;
 openModel = true;
-simulateModel = true;
-plotResults = true;
+simulateModel = false;
+plotResults = false;
 
 % Name of the simulink model
 [cfolder,~,~] = fileparts(mfilename('fullpath'));
@@ -45,6 +45,52 @@ x0 = [1;
 
 % Controller Gain
 K = place(A,B, [-1+j,-1-j]);
+
+
+%--------------------------------------------------------------------
+% DT_LPV Model Definition
+% (https://www.sciencedirect.com/science/article/pii/S2405896317313459)
+
+% DT Settings
+ds = 1; % Time step per k
+k_max = 1000;
+k = [0:ds:k_max*ds]; % Simulation Time
+
+% Polyotopic Matrix definitions
+m = 4;
+A(:,:,1) = a * [-0.80, 0.25; 0.25,-0.30]; B(:,1) = [ 1.90; 0.00];
+A(:,:,2) = a * [ 0.30, 0.70; 0.70, 0.00]; B(:,2) = [-1.00; 1.50];
+A(:,:,3) = a * [-0.30, 0.65; 0.55, 0.10]; B(:,3) = [ 0.30;-2.00];
+A(:,:,4) = a * [ 0.55,-0.20;-0.40,-0.30]; B(:,4) = [-0.60; 0.00];
+
+for i = 1:m
+    sys(:,:,i) = ss(A(:,:,i),B(:,i),C,D,ds)
+end
+
+sys.SamplingGrid = struct
+
+% Output Eq
+C = [1, 0]; D = 0;
+
+
+
+% Input
+T = 10;
+u = square((2*pi*k)/10);
+
+% Scedule Parameter
+syms k_sym
+g(k_sym) = piecewise(k_sym <  500, [0.50; 0.30; 0.20; 0.00],...
+                     k_sym >= 500, [0.35; 0.40; 0.10; 0.15]);
+alpha = g(k);
+
+% Initial Conditions
+x_0 = [0; 0];
+alpha_0 = [ 0.25; 0.25; 0.25; 0.25];
+
+
+
+
 
 
 if generateModel
@@ -106,6 +152,23 @@ add_line(gcs, 'Controller/1', 'Sum/2');
 % Create Simple Scope/Output
 add_block('simulink/Sinks/Out1', [gcs, '/Out']);
 add_line(gcs, 'LTI_sys/1', 'Out/1');
+
+
+
+%--------------------------------------------------------------------
+% LPV System
+
+% DT_LPV_sys
+add_block('cstblocks/Linear Parameter Varying/Discrete Varying State Space',...
+    [gcs, '/DT_LPV_sys'])
+% add_param(gcs, 'DT_LPV_sys/A', 'A(:,:,1)')
+
+
+
+
+
+
+
 
 
 % Auto Arrange
