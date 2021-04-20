@@ -1,0 +1,165 @@
+\documentclass[]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{physics}
+\usepackage{amsmath}
+\usepackage{hyperref}
+
+
+
+
+% 
+
+
+
+
+
+
+
+
+
+
+%opening
+\title{MECH 6327 Project Report:\\
+Examining Discrete-Time Polytopic Linear Parameter-Varying Systems under threat of malicious actuator and sensor manipulation}
+\author{Jonas Wagner}
+\date{2021 May 14}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+	In this project they dynamics of Discrete-Time Polytopic Linear Parameter-Varying (LPV) Systems will be examined. Specifically, various methods for the dual state and parameter estimation will be reproduced with the intent of analyzing effectiveness of these observers against various attacks. Each method performs optimization to minimize the estimation error in various ways while remaining stable and achieving certain performance criteria. Potentially the reachability of the system may be determined for various fault and attack scenarios through the minimization of an ellipsoidal bound.
+\end{abstract}
+
+
+\newpage
+\tableofcontents
+
+
+\newpage
+\section{Polytopic Systems Background}
+Polytopic LPV system models are essentially a smooth interpolation of a set of LTI submodels constructed using a specified weighting function. This can be looked at as decomposing a system into multiple operating spaces that operate as linear submodels. It is possibile for a Polytopic model to take a complex nonlinear model and redefine it as a time-varying interpolation of multiple linear submodels.
+
+Section references:\footnote{Each subsection is basically a summary of sections from these sources}
+\cite{ORJUELA2019295} \cite{orjuela2013nonlinear} \cite{beelen2017joint}\\
+
+\subsection{General Continuous Time Polytopic Model} 
+The simple polyotopic LPV structure can be described by the following weighted linear combination of LTI submodels:
+\begin{equation}\label{eq:CT_poly_sys_def}
+	\begin{cases}
+		\dot{x}(t) 	= \sum_{i=1}^r \mu_i(\xi(t))\{A_i x(t) + B_i u(t)\}  \vspace{5pt} \\ 
+		y(t)		= \sum_{i=1}^r \mu_i(\xi(t)) C_i x(t)
+	\end{cases}
+\end{equation}
+with state variable $x \in \real^n$ common to all submodels, control input $u \in \real^m$, output $y \in \real^p$, weighting function $\mu_i(\cdot)$ and premise variable $\xi(t) \in \real^{w}$. 
+
+Additionally, the weighting functions $\mu_i (\cdot)$ for each subsystem must satisfy the convex sum constraints:
+\begin{equation}\label{eq:convex_sum_constraints}
+	0 \leq \mu_i(\xi), \ \forall i = 1,\dots,r \ \ \text{and} \ \ \sum_{i=1} \mu_i(\xi) = 1
+\end{equation}
+
+%notes on dimensions: n = states, m = inputs, p = outputs, w = # of weights, r = # of subsystems
+
+One notable downside, for our application, is the requirement for $\xi(t)$ to be explicitly known in real-time for the model to function. This requirement is the primary driving factor in investigating this system as when $\xi(t)$ is not explicitly known additional uncertainties now exist in a system that are open for exploitation by an attacker.
+
+
+\subsection{Discrete Time Polytopic Model}
+In the DT-Polytopic Model the CT-Polytopic Model, \eqref{eq:CT_poly_sys_def}, is extended into the discrete time equivalence (either through sampling and zero-order holds or by definition) by the following parameter-varying system:
+
+\begin{equation}\label{eq:DT_poly_sys_def}
+	\begin{cases}
+		x_{k+1} &= \sum_{i=1}^{N} \alpha^i (A_i x_k + B_i u_k)\\
+		y		&= C x_k
+	\end{cases}
+\end{equation}
+with state variable $x \in \real^n$, control input $u \in \real^m$, and output $y \in \real^p$ common to all submodels. Each submodel is also associated with state matricies $A_i$ and $B_i$ while the output is calculated from the actual state by matrix $C$.
+
+The scheduling parameter, $\alpha \in \mathcal{A}$ is unknown and time-varying, with $\mathbf{A}$ defined as:
+\begin{equation}\label{eq:alpha_set}
+	\mathcal{A} = \{\alpha\in \real^N \ | \ \sum_{i=1}^N \alpha^i = 1, \ \alpha^i \geq 0 \ \ \forall \ i \in \{1,2,\dots,N\}\}
+\end{equation}
+%notes on dimensions: n = states, m = inputs, p = outputs, N = # of subsystems
+
+In the discrete time case, the unknown scheduling parameter, $\alpha$, is problematic for when developing a state-estimator, thus a Joint State-Parameter estimator must be used. The discrete nature of the measurements may also prove to be even more problematic if an attack is injected in any discrete measurement.
+
+\newpage
+\subsection{Joint State-Parameter Estimation Problem}
+The problem of developing joint state and parameter estimator is defined as finding recursive update rules to ensure that state and parameter estimates approach the actual states and parameters. This can be described as finding $f_x$ and $f_\alpha$ such that
+\begin{equation}\label{eq:est_pblm_statement}
+	\begin{cases}
+		\hat{x}_{k+1} 		&= f_x(\hat{x}_k, \hat{\alpha}_k, \{u_l, y_l\}_{l=\bar{k}_x})\\
+		\hat{\alpha}_{k+1} 	&= f_\alpha(\hat{x}_k, \hat{\alpha}_k, \{u_l, y_l\}_{l=\bar{k}_\alpha})
+	\end{cases}
+\end{equation}
+with $\bar{k}_x, \bar{k}_\alpha < k$ result in $\norm{x_k - \hat{x}_k} \to 0$ and $\norm{\alpha - \hat{\alpha}_k} \to 0$ as $k \to \infty$.
+
+\subsubsection{Problem Simplifications/Assumptions \cite{beelen2017joint}}
+For simplicity, and probably for feasibility reasons, the following assumptions will also be made:
+
+\begin{enumerate}
+	\item $\alpha \in \mathcal{A}$ is constant (or at least slowly time-varying)
+	\item The estimated system is observable $\forall \ \hat{\alpha} \in \mathcal{A}$, (i.e. $(\sum_{i=1}^N \hat{\alpha} A_i, C)$ is an observable pair)
+	\item A unique solution exists to the joint-estimation problem\\
+		$C \qty(q I - \sum_{i=1}^{N} \alpha^i A_i x_k)^{-1} \sum_{i=1}^N \alpha^i B_i = C \qty(q I - \sum_{i=1}^{N} \hat{\alpha}^i A_i x_k)^{-1} \sum_{i=1}^N \hat{\alpha}^i B_i \ \implies \ \alpha = \hat{\alpha}$
+\end{enumerate}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\newpage
+\section{Project Objectives}
+The primary objective of this project will be to reproduce three joint state and parameter estimator methods for LPV systems then test the ability of each to react to malicious input and measurement interference. A secondary/future objective will be to calculate the reachability set and how it is manipulated due to an attack on the system.
+
+The three estimation methods of interest \footnote{taken directly from \cite{beelen2017joint} and we are essentially recreating these results but performing additional tests} include:
+\begin{enumerate}
+	\item Dual-Estimation (DE) approach is a method that first solves a two step optimization problem for parameters-estimation and then uses a "traditional" robust polytopic observer design for state estimation. \cite{beelen2017joint}
+	\item Extended Kalman Filter (EKF) using prediction and update steps for the system estimates, but this version does require the assumption of Gaussian noise. \cite{beelen2017joint}
+	\item Interacting Multiple Model estimation (IMM) method which uses a different kalmen filter for multiple modes and the probability that the system will be a certain mode.\cite{bar2004estimation}
+\end{enumerate}
+% Need to find access to \cite{bar2004estimation} for the IMM algorithm details...
+
+%The primary attack methods for initial testing (for simplicity) will consist of malicious random gaussian noise being added to measurements. The power of these attacks can be classified into three catagories depending on the malicous noise power:
+%\begin{enumerate}
+%	\item Stealthy attacks: power of the attack is along the same level as the normal noise standard-deviation.
+%	\item Unstealthy attacks: the attack is disruptive, yet detectable, with aims to degrade the system performance.
+%	\item Super Unstealthy attack: a very considerable attack that aims to severely disrupt a system while not remaining undetectable.
+%\end{enumerate}
+
+The next objective will be to show how much each attack method can effect the states (specifically the reachable set) for each estimator.\footnote{and potentially develop a better solution... modifying \cite{securestateestimation}?} This work is very similar to \cite{hashemi2018comparison} but will be expanding from stochastic DT-LTI systems to deterministic DT-LPV systems.
+
+\section{Proposed Methods}
+The following steps will be taken to complete the problem.
+
+\begin{enumerate}
+	\item This project will begin by reproducing the results of joint state and parameter estimation from \cite{beelen2017joint} using the same LPV system used in the paper. (This will likely be done using Simulink with custom estimator blocks.)
+%	\item The next step will be to introduce additional system noise (presumably to the scheduling parameters themselves) and measurement poise into the sensors. This will be important to do first and perform a separate analysis of each before malicious attacks are included.
+	\item Next attacks will be introduced into the sensor and the response for each estimator will be compared.
+	\item This will then be expanded to a more interesting system\footnote{Seperator Testbed? scheduling parameters being valve on/off and for various linearized tank level systems... is it possible to analyze with a scheduling parameter dependent on a state???... Otherwise a more complicated electrical network w/ switches or pneumatic system could be done instead} that will be more useful for sensor attack testing (i.e. more sensors then states or high noise system).
+	\item Finally, an analysis of the reachable set deviation due to attacks will be performed by finding a minimal ellipsoid constraining the states that would be reachable prior to attack detection.\footnote{possibly future work}
+\end{enumerate}
+
+\newpage
+\bibliographystyle{ieeetr}
+\bibliography{mybib.bib}
+
+
+\end{document}
