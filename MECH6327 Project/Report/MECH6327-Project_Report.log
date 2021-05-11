@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.11) (preloaded format=pdflatex 2021.3.6)  19 APR 2021 21:48
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.11) (preloaded format=pdflatex 2021.3.6)  10 MAY 2021 22:44
 entering extended mode
 **./MECH6327-Project_Report.tex
 (MECH6327-Project_Report.tex
@@ -364,40 +364,37 @@ Package rerunfilecheck Warning: File `MECH6327-Project_Report.out' has changed.
 (rerunfilecheck)                or use package `bookmark'.
 
 Package rerunfilecheck Info: Checksums for `MECH6327-Project_Report.out':
-(rerunfilecheck)             Before: 7F3078CFE8F776CC72736722685731B6;1510
-(rerunfilecheck)             After:  402CAC508DBF1663852A4B2B5FA1B881;1520.
+(rerunfilecheck)             Before: 402CAC508DBF1663852A4B2B5FA1B881;1520
+(rerunfilecheck)             After:  ABCBF4158437E80D18C1DDD59585997F;1685.
  ) 
 Here is how much of TeX's memory you used:
  8745 strings out of 479337
- 128433 string characters out of 2857148
- 441489 words of memory out of 3000000
+ 128443 string characters out of 2857148
+ 441492 words of memory out of 3000000
  26063 multiletter control sequences out of 15000+200000
  411006 words of font info for 53 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  82i,9n,89p,627b,327s stack positions out of 5000i,500n,10000p,200000b,50000s
-pdfTeX warning (dest): name{subsection.1.4} has been referenced but does not 
-exist, replaced by a fixed one
-
-<C:/Users/Jonas/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cm
-bx10.pfb><C:/Users/Jonas/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfo
-nts/cm/cmbx12.pfb><C:/Users/Jonas/AppData/Local/Programs/MiKTeX/fonts/type1/pub
-lic/amsfonts/cm/cmbx9.pfb><C:/Users/Jonas/AppData/Local/Programs/MiKTeX/fonts/t
-ype1/public/amsfonts/cm/cmex10.pfb><C:/Users/Jonas/AppData/Local/Programs/MiKTe
-X/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/Jonas/AppData/Local/Progr
-ams/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi5.pfb><C:/Users/Jonas/AppData/Loc
-al/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Users/Jonas/App
-Data/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/J
-onas/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:
-/Users/Jonas/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr17
-.pfb><C:/Users/Jonas/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/
-cm/cmr6.pfb><C:/Users/Jonas/AppData/Local/Programs/MiKTeX/fonts/type1/public/am
-sfonts/cm/cmr7.pfb><C:/Users/Jonas/AppData/Local/Programs/MiKTeX/fonts/type1/pu
-blic/amsfonts/cm/cmr8.pfb><C:/Users/Jonas/AppData/Local/Programs/MiKTeX/fonts/t
-ype1/public/amsfonts/cm/cmr9.pfb><C:/Users/Jonas/AppData/Local/Programs/MiKTeX/
-fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/Jonas/AppData/Local/Program
-s/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Users/Jonas/AppData/Local
-/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti10.pfb>
-Output written on MECH6327-Project_Report.pdf (6 pages, 242846 bytes).
+<C:/Users/Jonas/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/
+cmbx10.pfb><C:/Users/Jonas/AppData/Local/Programs/MiKTeX/fonts/type1/public/ams
+fonts/cm/cmbx12.pfb><C:/Users/Jonas/AppData/Local/Programs/MiKTeX/fonts/type1/p
+ublic/amsfonts/cm/cmbx9.pfb><C:/Users/Jonas/AppData/Local/Programs/MiKTeX/fonts
+/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/Jonas/AppData/Local/Programs/MiK
+TeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/Jonas/AppData/Local/Pro
+grams/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi5.pfb><C:/Users/Jonas/AppData/L
+ocal/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Users/Jonas/A
+ppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users
+/Jonas/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><
+C:/Users/Jonas/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr
+17.pfb><C:/Users/Jonas/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfont
+s/cm/cmr6.pfb><C:/Users/Jonas/AppData/Local/Programs/MiKTeX/fonts/type1/public/
+amsfonts/cm/cmr7.pfb><C:/Users/Jonas/AppData/Local/Programs/MiKTeX/fonts/type1/
+public/amsfonts/cm/cmr8.pfb><C:/Users/Jonas/AppData/Local/Programs/MiKTeX/fonts
+/type1/public/amsfonts/cm/cmr9.pfb><C:/Users/Jonas/AppData/Local/Programs/MiKTe
+X/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/Jonas/AppData/Local/Progr
+ams/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Users/Jonas/AppData/Loc
+al/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti10.pfb>
+Output written on MECH6327-Project_Report.pdf (6 pages, 243038 bytes).
 PDF statistics:
  192 PDF objects out of 1000 (max. 8388607)
  43 named destinations out of 1000 (max. 500000)
