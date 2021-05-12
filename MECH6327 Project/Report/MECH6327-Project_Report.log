@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.11) (preloaded format=pdflatex 2021.3.6)  10 MAY 2021 22:44
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.11) (preloaded format=pdflatex 2021.3.6)  12 MAY 2021 08:22
 entering extended mode
 **./MECH6327-Project_Report.tex
 (MECH6327-Project_Report.tex
@@ -124,6 +124,17 @@ LaTeX Font Info:    Redeclaring font encoding OMS on input line 744.
 LaTeX Info: Redefining \[ on input line 2923.
 LaTeX Info: Redefining \] on input line 2924.
 ))
+(C:\Users\Jonas\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\amsfonts.sty
+Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
+\symAMSa=\mathgroup4
+\symAMSb=\mathgroup5
+LaTeX Font Info:    Redeclaring math symbol \hbar on input line 98.
+LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
+(Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
+)
+(C:\Users\Jonas\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\amssymb.sty
+Package: amssymb 2013/01/14 v3.01 AMS font symbols
+)
 (C:\Users\Jonas\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\hyperref.sty
 Package: hyperref 2021-02-27 v7.00k Hypertext links for LaTeX
 
@@ -265,24 +276,24 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 ) (MECH6327-Project_Report.aux)
 \openout1 = `MECH6327-Project_Report.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 28.
-LaTeX Font Info:    ... okay on input line 28.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 28.
-LaTeX Font Info:    ... okay on input line 28.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 28.
-LaTeX Font Info:    ... okay on input line 28.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 28.
-LaTeX Font Info:    ... okay on input line 28.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 28.
-LaTeX Font Info:    ... okay on input line 28.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 28.
-LaTeX Font Info:    ... okay on input line 28.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 28.
-LaTeX Font Info:    ... okay on input line 28.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 28.
-LaTeX Font Info:    ... okay on input line 28.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 28.
-LaTeX Font Info:    ... okay on input line 28.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 23.
+LaTeX Font Info:    ... okay on input line 23.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 23.
+LaTeX Font Info:    ... okay on input line 23.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 23.
+LaTeX Font Info:    ... okay on input line 23.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 23.
+LaTeX Font Info:    ... okay on input line 23.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 23.
+LaTeX Font Info:    ... okay on input line 23.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 23.
+LaTeX Font Info:    ... okay on input line 23.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 23.
+LaTeX Font Info:    ... okay on input line 23.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 23.
+LaTeX Font Info:    ... okay on input line 23.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 23.
+LaTeX Font Info:    ... okay on input line 23.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -318,7 +329,7 @@ LaTeX Font Info:    ... okay on input line 28.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-Package hyperref Info: Link coloring OFF on input line 28.
+Package hyperref Info: Link coloring OFF on input line 23.
 (C:\Users\Jonas\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\nameref.sty
 Package: nameref 2021-04-02 v2.47 Cross-referencing by name of section
 
@@ -331,14 +342,25 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
 \c@section@level=\count279
 )
-LaTeX Info: Redefining \ref on input line 28.
-LaTeX Info: Redefining \pageref on input line 28.
-LaTeX Info: Redefining \nameref on input line 28.
+LaTeX Info: Redefining \ref on input line 23.
+LaTeX Info: Redefining \pageref on input line 23.
+LaTeX Info: Redefining \nameref on input line 23.
  (MECH6327-Project_Report.out) (MECH6327-Project_Report.out)
 \@outlinefile=\write3
 \openout3 = `MECH6327-Project_Report.out'.
 
+LaTeX Font Info:    Trying to load font information for U+msa on input line 26.
 
+
+(C:\Users\Jonas\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Trying to load font information for U+msb on input line 26.
+
+
+(C:\Users\Jonas\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+)
 [1
 
 {C:/Users/Jonas/AppData/Local/MiKTeX/pdftex/config/pdftex.map}]
@@ -347,16 +369,40 @@ LaTeX Info: Redefining \nameref on input line 28.
 \openout4 = `MECH6327-Project_Report.toc'.
 
  [2]
-Underfull \hbox (badness 10000) in paragraph at lines 45--47
+Underfull \hbox (badness 10000) in paragraph at lines 40--42
 
  []
 
 [3]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\@ifnextchar' on input line 98.
+(hyperref)                removing `\@ifnextchar' on input line 93.
 
-[4] [5] (MECH6327-Project_Report.bbl) [6] (MECH6327-Project_Report.aux)
+[4]
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\@ifnextchar' on input line 120.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `subscript' on input line 120.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `subscript' on input line 120.
+
+[5]
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\@ifnextchar' on input line 162.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 181--183
+
+ []
+
+[6] [7] [8] [9] [10] [11] [12] (MECH6327-Project_Report.bbl) [13] [14]
+(MECH6327-Project_Report.aux)
 
 Package rerunfilecheck Warning: File `MECH6327-Project_Report.out' has changed.
 
@@ -364,17 +410,17 @@ Package rerunfilecheck Warning: File `MECH6327-Project_Report.out' has changed.
 (rerunfilecheck)                or use package `bookmark'.
 
 Package rerunfilecheck Info: Checksums for `MECH6327-Project_Report.out':
-(rerunfilecheck)             Before: 402CAC508DBF1663852A4B2B5FA1B881;1520
-(rerunfilecheck)             After:  ABCBF4158437E80D18C1DDD59585997F;1685.
+(rerunfilecheck)             Before: B2F8E58276B8DDD5F59129E1B8FA0C60;5822
+(rerunfilecheck)             After:  BDE7A9716264C97E92185FFAB27E1F5A;5893.
  ) 
 Here is how much of TeX's memory you used:
- 8745 strings out of 479337
- 128443 string characters out of 2857148
- 441492 words of memory out of 3000000
- 26063 multiletter control sequences out of 15000+200000
- 411006 words of font info for 53 fonts, out of 3000000 for 9000
+ 9322 strings out of 479337
+ 134976 string characters out of 2857148
+ 449280 words of memory out of 3000000
+ 26581 multiletter control sequences out of 15000+200000
+ 412865 words of font info for 63 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 82i,9n,89p,627b,327s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 82i,26n,89p,674b,387s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Users/Jonas/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/
 cmbx10.pfb><C:/Users/Jonas/AppData/Local/Programs/MiKTeX/fonts/type1/public/ams
 fonts/cm/cmbx12.pfb><C:/Users/Jonas/AppData/Local/Programs/MiKTeX/fonts/type1/p
@@ -393,10 +439,11 @@ public/amsfonts/cm/cmr8.pfb><C:/Users/Jonas/AppData/Local/Programs/MiKTeX/fonts
 /type1/public/amsfonts/cm/cmr9.pfb><C:/Users/Jonas/AppData/Local/Programs/MiKTe
 X/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/Jonas/AppData/Local/Progr
 ams/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Users/Jonas/AppData/Loc
-al/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti10.pfb>
-Output written on MECH6327-Project_Report.pdf (6 pages, 243038 bytes).
+al/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Users/Jonas/Ap
+pData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msam7.pfb>
+Output written on MECH6327-Project_Report.pdf (14 pages, 289594 bytes).
 PDF statistics:
- 192 PDF objects out of 1000 (max. 8388607)
- 43 named destinations out of 1000 (max. 500000)
- 57 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 363 PDF objects out of 1000 (max. 8388607)
+ 85 named destinations out of 1000 (max. 500000)
+ 233 words of extra memory for PDF output out of 10000 (max. 10000000)
 
