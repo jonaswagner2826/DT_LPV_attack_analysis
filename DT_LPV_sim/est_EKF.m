@@ -1,9 +1,7 @@
 function [x_hat, alpha_hat, P] = est_EKF(x_hat, alpha_hat, P, y, u,...
-                                         A, B, C, D, Q, R)
+                                         A, B, C, Q, R)
     %est_EKF Function performs a single iteration of the parameter and
     %state estimation using an EKF
-    % The specific Matrices need to be updated based on the system... might
-    % update to be parameters later
     
     arguments
         x_hat
@@ -14,7 +12,6 @@ function [x_hat, alpha_hat, P] = est_EKF(x_hat, alpha_hat, P, y, u,...
         A = string(-1)
         B = string(-1)
         C = [1, 0]
-        D = 0
         Q = string(-1)
         R = string(-1)
     end
@@ -29,10 +26,10 @@ function [x_hat, alpha_hat, P] = est_EKF(x_hat, alpha_hat, P, y, u,...
     end
     if string(B) == string(-1)
         clear B
-        B(:,1) = [ 1.90; 0.00];
-        B(:,2) = [-1.00; 1.50];
-        B(:,3) = [ 0.30;-2.00];
-        B(:,4) = [-0.60; 0.00];
+        B(:,:,1) = [ 1.90; 0.00];
+        B(:,:,2) = [-1.00; 1.50];
+        B(:,:,3) = [ 0.30;-2.00];
+        B(:,:,4) = [-0.60; 0.00];
     end
     
     % System Dimenstion Matrices
@@ -43,11 +40,11 @@ function [x_hat, alpha_hat, P] = est_EKF(x_hat, alpha_hat, P, y, u,...
     
     
     % EKF Covariance Matrices
-    if Q == string(-1)
+    if string(Q) == string(-1)
         clear Q
         Q = diag([zeros(1,n), 100*ones(1,m)]);
     end
-    if R == string(-1)
+    if string(R) == string(-1)
         clear R
         R = 0.01;
     end
@@ -56,14 +53,14 @@ function [x_hat, alpha_hat, P] = est_EKF(x_hat, alpha_hat, P, y, u,...
     A_hat = diag([zeros(1,n), ones(1,m)]);
     for i = 1:m
         A_hat(1:n,1:n) = A_hat(1:n,1:n) + alpha_hat(i) * A(:,:,i);
-        A_hat(1:n,n+i) = A(:,:,i) * x_hat + B(:,i) * u;
+        A_hat(1:n,n+i) = A(:,:,i) * x_hat + B(:,:,i) * u;
     end
     
     
     % Preditiction Step
     x_hat_pre = 0;
     for i = 1:m
-        x_hat_pre = x_hat_pre + alpha_hat(i) * (A(:,:,i) * x_hat + B(:,i) * u);
+        x_hat_pre = x_hat_pre + alpha_hat(i) * (A(:,:,i) * x_hat + B(:,:,i) * u);
     end
     alpha_hat_pre = alpha_hat;
     P_pre = A_hat * P * A_hat' + Q;

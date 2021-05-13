@@ -1,15 +1,24 @@
-\documentclass[]{article}
-%\documentclass[]{ieeetran}
+%\documentclass[]{article}
+
+
+
+
+
 %Need to turn back into a two-column confrence paper for submission
+\documentclass[]{ieeetran}
+
+
+
 
 
 
 \usepackage[margin=1in]{geometry}
 \usepackage{physics}
 \usepackage{amsmath, amsfonts, amssymb}
-\usepackage{hyperref}
-
-
+%\usepackage{hyperref}
+\usepackage{nccmath}
+\usepackage{cuted}
+\usepackage{mathtools}
 
 
 
@@ -29,11 +38,11 @@ Examining Discrete-Time Polytopic Linear Parameter-Varying Systems under threat 
 \end{abstract}
 
 
-\newpage
-\tableofcontents
-
-
-\newpage
+%\newpage
+%\tableofcontents
+%
+%
+%\newpage
 \section{Polytopic Systems Background}
 Polytopic LPV system models are essentially a smooth interpolation of a set of LTI submodels constructed using a specified weighting function. This can be looked at as decomposing a system into multiple operating spaces that operate as linear submodels. It is possibile for a Polytopic model to take a complex nonlinear model and redefine it as a time-varying interpolation of multiple linear submodels.
 
@@ -79,7 +88,7 @@ The scheduling parameter, $\alpha \in \mathcal{A}$ is unknown and time-varying, 
 
 In the discrete time case, the unknown scheduling parameter, $\alpha$, is problematic for when developing a state-estimator, thus a Joint State-Parameter estimator must be used. The discrete nature of the measurements may also prove to be even more problematic if an attack is injected in any discrete measurement.
 
-\newpage
+%\newpage
 \section{Joint State-Parameter Estimation Problem}
 The problem of developing joint state and parameter estimator is defined as finding recursive update rules to ensure that state and parameter estimates approach the actual states and parameters. This can be described as finding $f_x$ and $f_\alpha$ such that
 \begin{equation}\label{eq:est_pblm_statement}
@@ -96,9 +105,9 @@ For simplicity, and probably for feasibility reasons, the following assumptions 
 \begin{enumerate}
 	\item $\alpha \in \mathcal{A}$ is constant (or at least slowly time-varying)
 	\item The estimated system is observable $\forall \ \hat{\alpha} \in \mathcal{A}$, (i.e. $(\sum_{i=1}^m \hat{\alpha} A_i, C)$ is an observable pair)
-	\item A unique solution exists to the joint-estimation problem\\
-		$C \qty(q I - \sum_{i=1}^{m} \alpha^i A_i x_k)^{-1} \sum_{i=1}^m \alpha^i B_i = C \qty(q I - \sum_{i=1}^{m} \hat{\alpha}^i A_i x_k)^{-1} \sum_{i=1}^m \hat{\alpha}^i B_i \ \implies \ \alpha = \hat{\alpha}$
+	\item A unique solution exists to the joint-estimation problem
 \end{enumerate}
+$C \qty(q I - \sum_{i=1}^{m} \alpha^i A_i x_k)^{-1} \sum_{i=1}^m \alpha^i B_i \\= C \qty(q I - \sum_{i=1}^{m} \hat{\alpha}^i A_i x_k)^{-1} \sum_{i=1}^m \hat{\alpha}^i B_i \implies \alpha = \hat{\alpha}$
 
 \subsection{Potential Methods}
 Three joint state and parameter estimator methods for LPV systems will be developed and tested for the ability of each to react to malicious input and measurement interference.
@@ -111,16 +120,12 @@ include:
 	\item Interacting Multiple Model estimation (IMM) method which uses a different kalmen filter for multiple modes and the probability that the system will be a certain mode.\cite{bar2004estimation}
 \end{enumerate}
 
-
 %\newpage
-
-
-\newpage
 \section{Kalmen Filter Derived Methods}
 \subsection{Extended Kalmen Filter (EKF) Method \cite{ekf_param_est}}
 The Extended Kalmen Filter (EKF) method relies on a prediction and update steps for both state and parameter estimates by augmenting the state with the parameters creating a nonlinear system.
 \begin{equation}
-	\mqty[x_{k+1}\\ \alpha_{k+1}] = \mqty[\sum_{i=1}^m \alpha^i \qty(A_i x_k + B_i u_k)\\ \alpha_k] := f(x_k, \alpha_k, u_k)
+	\medmath{\mqty[x_{k+1}\\ \alpha_{k+1}] = \mqty[\sum_{i=1}^m \alpha^i \qty(A_i x_k + B_i u_k)\\ \alpha_k] := f(x_k, \alpha_k, u_k)}
 \end{equation}
 This is then solved through a two-step prediction and estimation process. The prediction step is defined as
 \begin{subequations}
@@ -146,7 +151,9 @@ with the augmented estimated parameters defined by
 	\begin{align}
 		L_k &= P_{k|k-1} \hat{C}^\intercal \qty(R + \hat{C} P_{k|k-1} \hat{C}^\intercal)^{-1}\\
 		\hat{A}_k &= \eval{\pdv{f(x_k, \alpha_k, u_k))}{\mqty[x&\alpha]^\intercal}}_{(\hat{x}_k, \hat{\alpha}_k, u_k)}\nonumber\\
-		&= \mqty[\sum_{i=1}^m \hat{\alpha}_{k|k}^i A_i & \mqty[\qty(A_1 x_{k|k} + B_1 u_k) \cdots \qty(A_m x_{k|k} + B_m u_k)]\\ 0 &I]\\
+		&= \medmath{\mqty[\sum_{i=1}^m \hat{\alpha}_{k|k}^i A_i &\mqty[A_1 x_{k|k} + B_1 u_k \cdots A_m x_{k|k} + B_m u_k]
+		%\qty(A_1 x_{k|k} + B_1 u_k) \cdots \qty(A_m x_{k|k} + B_m u_k)]
+		\\ 0 &I]}\\
 		\hat{C} &= \mqty[C &0]
 	\end{align}
 \end{subequations}
@@ -158,12 +165,9 @@ This method is widely used and will converge when the state and parameter estima
 %The Intercting Multiple Model (IMM) method uses a individual kalmen filters for each modes and then determines the probability that the system will be a certain mode.
 
 
-\newpage
+%\newpage
 \section{DE Method Optimization Problem Definition and Solution \cite{beelen2017joint}} \label{sec:DE_method_opt_pblm}
 The primary optimization problems to be analyzed are the state and parameter estimation problems within the DE method. This method separates the joint-estimation problem into a state and then a parameter-estimation problem, each of which are determined using convex optimization techniques.
-
-
-
 
 The parameter estimation is done independently using a recursive parameter-estimation method relying solely on the input-output data $\{u_l , y_l\}_{l=1}^k$ without any reliance on the state-estimates. This itself is an optimization problem that aims to minimize the prediction error given the parameter estimates.
 
@@ -177,7 +181,7 @@ with $\hat{\alpha}_k \in \mathcal{A}$ being the estimated parameters and $L_i$ b
 \subsubsection{State Estimation Error:}
 The estimation error is defined as
 \begin{equation} \label{eq:DE_state_error}
-	e_{k+1} = \sum_{i=1}^m \qty(\hat{\alpha}_k^i\qty(A_i + L_i C)e_k + \qty(\alpha^i - \hat{\alpha}_k^i)\qty(A_i x_k + B_i u_k))
+	\medmath{e_{k+1} = \sum_{i=1}^m \qty(\hat{\alpha}_k^i\qty(A_i + L_i C)e_k + \qty(\alpha^i - \hat{\alpha}_k^i)\qty(A_i x_k + B_i u_k))}
 \end{equation}
 A solution that ensures $e_k$ is stable is that when the disturbance caused by the deviation of $\hat{\alpha}$, $v_k$ decays to zero (a requirement for the parameter estimation problem), $e_k$ also decays to zero. This is equivelent to ensuring Input-to-State Stability (ISS) of the estimator.\\
 
@@ -192,12 +196,13 @@ and ISS with respect to the disturbance term, $v_k$, defined by
 \end{equation}
 can be guaranteed by using an ISS Lyapnov function to solve for an appropriate Luenberger gain.\\
 The ISS Lyapnov function is a function $V : \real^{n+m} \to \real$, such that $$V(e,\hat{\alpha})>0 \forall e\neq 0, \quad V(0,\hat{\alpha}) = 0,$$ and
+
 \begin{equation}
-	V(e_{k+1}, \hat{\alpha}_{k+1}) - V(e_k, \hat{\alpha}_k) < -\norm{e_k}^2 + \zeta \norm{v_k}^2, \ \forall \ k \in \{0, \dots,N\}
+	V(e_{k+1}, \hat{\alpha}_{k+1}) - V(e_k, \hat{\alpha}_k) < -\norm{e_k}^2 + \zeta \norm{v_k}^2
 \end{equation}
+for all $k \in \{0, \dots,N\}$.
 
-
-\newpage
+%\newpage
 \subsubsection{LMI Feasibility Problem for ISS}
 %%%% Insert Derivation from the theorem taken from Heemels 2010????
 A theorem provided in \cite{heemels2010} states that if there exists matrices $P_i,\ F_i,\ G_i,\ i \in \{1, \dots, m\}$ and a scaler $\zeta$ such that
@@ -208,36 +213,63 @@ A theorem provided in \cite{heemels2010} states that if there exists matrices $P
 		  G_i^\intercal						&0	&0					&\zeta I]
 		  \succ 0
 \end{equation}
-for all $i, j \in \{1,\dots,m\}$, then ISS with respect to $v$ is guaranteed for \eqref{eq:DE_state_error_simple} for the Luenberger gains calculated with
+for all $i, j \in \{1,\dots,m\}$, then for \eqref{eq:DE_state_error_simple} with the Luenberger gains calculated with
 \begin{equation}
 	L_i = G_i^{-1} F_i
 \end{equation}
-This essentially means that the state estimate converges to the actual state whenever deviations of $\hat{\alpha}$ decay to zero.
+guarantees ISS with respect to $v$.\footnote{The derivation explained in \cite{heemels2010} is interesting (but long and more Optimal Estimation focused in nature) and essentially proves that the ISS Lyapnov function always exists if the solution is feasible.}
+This essentially means that the $e_k \to 0$ whenever $v_k \to 0$, or identically, $\hat{x}_k \to x_k$ and $\hat{\alpha}_k \to \alpha_k$, over a finite number of steps.
 
 \subsection{Parameter Estimation Problem and Solution}
+The DE method estimates the parameters by using only the input-ouput data $\{u_l , y_l\}_{l=0}^k$ and completely ignores the estimated states. This is done through the minimization of the prediction error directly through an optimization based on a modified least-squares type algorithm.
 
+\subsubsection{Parameter Estimate Optimization Problem\cite{beelen2017joint}}
+The parameter-estimation problem is solved by minimizing the prediction error defined as
+\begin{subequations}\label{eq:DE_param_opt_pblm_original}
+	\begin{equation}
+		\hat{\alpha}_k = \arg \min_{\alpha \in \mathcal{A}} \sum_{l=0}^k \gamma^{k-l} \norm{y_k - \varphi_k \nu(\alpha)}^2
+	\end{equation}
+	with a the forgetting factor $0<\gamma\leq1$ and
+	\begin{align}
+		\varphi_k &= \mqty[y_{k-1} \ \dots \ y_{k-n_x} \ u_{k-1} \ \dots \ u_{k-n_x}]\\
+		\nu(\alpha) &= \mqty[a_1(\alpha) \ \dots \ a_{n_x}(\alpha) \ b_1(\alpha) \ \dots \ b_{n_x}(\alpha)]^\intercal
+	\end{align}
+\end{subequations}
+with variables $a_i$ and $b_i$ being the coefficients from the polynomials
+\begin{subequations}\label{eq:DE_param_poly}
+	\begin{align}
+		\sum_{i=1}^{n_x} a_i(\alpha)q^i &= \det(qI - \sum_{i=1}^m \alpha^i A_i)\\
+		\sum_{i=1}^{n_x} b_i(\alpha)q^i &= C \text{adj}\qty(qI - \sum_{i=1}^m \alpha^i A_i) \sum_{i=1}^m \alpha^i B_i
+	\end{align}
+\end{subequations}
+which are in fact the transfer function coefficients for the system itself, \eqref{eq:DT_poly_sys_def}.\\
+It is also noteworthy that the optimization problem \eqref{eq:DE_param_opt_pblm_original} is a nonlinear (and possibly nonconvex) optimization problem, so instead of solving this directly, a two step approach can be taken to first solve for the coefficients in \eqref{eq:DE_param_poly} and then determining the scheduling parameter corresponding to those transfer function coefficients.
 
-
-
-
-
-
-\subsection{Parameter Estimation Solution}
-
-
-
-
-
+%\newpage
 \subsubsection{Step 1: Determine Polynomial Coefficients}
-
-
+Determining the polynomial coefficients is a simple optimization problem consisting of an unconstrained linear least-squares optimization problem given by
+\begin{equation}\label{eq:DE_param_opt_pblm_pt1}
+	\hat{\nu}_k = \arg \min_\nu \sum_{l=0}^k \gamma^{k-l} \norm{y_k - \varphi_k \nu}^2
+\end{equation}
+The solution to this optimization problem can be computed recursively with
+\begin{subequations}\label{eq:DE_param_opt_pblm_pt1_soln}
+	\begin{align}
+		P_k &= \frac{1}{\gamma} P_{k-1} - \frac{1}{\gamma} \varphi_k^\intercal \qty(\gamma I + \varphi P_{k-1} \varphi_k^\intercal)^{-1} \varphi_k P_{k-1}\\
+		\hat{\nu}_k &= \hat{\nu}_{k-1} + P_k \varphi_k^\intercal \qty(y_k - \varphi_k \hat{\nu}_{k-1})
+	\end{align}
+\end{subequations}
+with initial estimates of $\hat{\nu}_0$ and some matrix $P\succ0$.
 
 \subsubsection{Step 2: Determine Scheduling Parameter}
+The second step is to calculate parameter estimates as the solution to the nonlinear optimization problem
+\begin{equation}\label{eq:DE_param_opt_pblm_pt2}
+	\hat{\alpha}_k = \arg \min_{\alpha\in\mathcal{A}} \qty(\hat{\nu}_k - \nu(\alpha))^\intercal P_k^{-1} \qty(\hat{\nu}_k - \nu(\alpha))
+\end{equation}
+The optimal solution and resultant parameter estimates are equivalent to the optimal solution to the original optimization problem \eqref{eq:DE_param_opt_pblm_original}. The proof for this is shown in \cite{beelen2017joint} and consists of taking the solution to \eqref{eq:DE_param_opt_pblm_pt2} and going in reverse through the definition and solution of \eqref{eq:DE_param_opt_pblm_pt1} to equate the optimal solution to that of the original optimization problem \eqref{eq:DE_param_opt_pblm_original}.
 
 
 
-
-\newpage
+%\newpage
 \section{Numerical Experimentation}
 
 \subsection{Simulation Implementation}
@@ -283,7 +315,7 @@ with the output matrix $C = \mqty[0 &1]$, making the dimensions
 
 
 
-\newpage
+%\newpage
 \section{Attack Implementation}
 
 
@@ -293,7 +325,7 @@ with the output matrix $C = \mqty[0 &1]$, making the dimensions
 
 
 
-\newpage
+%\newpage
 \section{Results}
 
 
@@ -302,7 +334,7 @@ with the output matrix $C = \mqty[0 &1]$, making the dimensions
 
 
 
-\newpage
+%\newpage
 \section{Discussion}%Incorporate with results??????????
 
 
@@ -311,7 +343,7 @@ with the output matrix $C = \mqty[0 &1]$, making the dimensions
 
 
 
-\newpage
+%\newpage
 \section{Conclusion} %??????????????????????????
 
 

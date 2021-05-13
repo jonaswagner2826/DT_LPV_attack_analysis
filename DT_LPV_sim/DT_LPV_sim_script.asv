@@ -91,13 +91,13 @@ x = x_0;
 % DE Initialization
 x_hat_DE = x_hat_0;
 alpha_hat_DE = alpha_hat_0;
-P_DE = randn(2*n); P_DE = P_DE*P_DE.'; %random ??? or this rand one:
+P_DE = randn(2*n); P_DE = P_DE*P_DE.' %random ??? or this rand one:
 % P_DE = [1.7552    1.7244    0.7521    0.4716;
 %         1.7244    4.3679   -0.4500   -0.7000;
 %         0.7521   -0.4500    3.5146    2.5992;
 %         0.4716   -0.7000    2.5992    1.9602];
 % nu_hat = randn(2*n,1); %random ??? or this rand one:
-nu_hat = [0.3; -0.2; 0.1; -0.4];
+nu_hat = [0.3; 0.2; 0.1; 0.4];
 % phi_hat = randn(2*n,1); %random ??? or this rand one: %[1.2424; -1.0667; 0.9337; 0.3503];
 phi = zeros(1,m);
 
