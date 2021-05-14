@@ -1,4 +1,4 @@
-function [x_hat, alpha_hat, P, phi, nu_hat] ...
+function [x_hat, alpha_hat, nu_hat] ...
                                         = est_DE(x_hat, alpha_hat, y, u,...
                                            P, phi, nu_hat,...
                                            gamma, A, B, C)
@@ -76,7 +76,7 @@ function [x_hat, alpha_hat, P, phi, nu_hat] ...
         x_hat = x_hat + alpha_hat(i)*(A(:,:,i)*x_hat_old + B(:,i)*u)...
             + L(:,:,i)*(C*x_hat_old - y);
     end
-    %x_hat = x_hat k
+    %Note: x_hat = x_hat k
     
     %% Parameter Estimation
    
@@ -102,71 +102,72 @@ function [x_hat, alpha_hat, P, phi, nu_hat] ...
 %     end
     
 
-    % Est. Opt. Problem
-    disp('DE Parameter Estimation Started')
-    % attempting yalmip
-    yalmip('clear')
-    Alpha = sdpvar(m,1);
-    nu_alpha = sdpvar(2*n,1);
-    
-    Constraints = [sum(Alpha) == 1];
-    Constraints = [Constraints, nu_alpha == nuVector(Alpha)];
-    for i = 1:m
-        Constraints  = [Constraints, Alpha(i) >= 0];
-    end
-    
-    Objective = (nu_hat - nu_alpha)' * inv(P) * (nu_hat - nu_alpha)
-    disp(Objective)
-    
-    options = sdpsettings();%'verbose',1);%,'solver','quadprog','quadprog.maxiter',100);
-    
-    sol = optimize(Constraints,Objective,options)
-    
-    
-%     cvx_begin quiet
-%         variable alpha_cvx(m,1)
-%         nu_alpha = nu_alpha(alpha_cvx);
-%         
-%         % Minimize This
-%         minimize((nu_hat - nu_alpha)' * inv(P) * (nu_hat - nu_alpha))
-%         subject to
-%             sum = 0;
-%             for i = 1:m
-%                 alpha_cvx(i) >= 0;
-%                 sum = sum + alpha_cvx(i);
-%             end
-%             sum == 1;
-%     cvx_end
-    if sol.problem == 0
-         % Extract and display value
-         alpha_hat = value(Alpha) %alpha_cvx;
-    else
-         disp('Hmm, something went wrong!');
-         sol.info
-         yalmiperror(sol.problem)
-         error('issue here.....')
-    end
-    
-    
-    
-    % k step
-    P_old = P;
-    phi_old = phi;
-    nu_hat_old = nu_hat;
-    
-%     % k+1 step
-%     phi(2:n) = phi_old(1:n-1);
-%     phi(1) = y;
-%     phi(n+2:2*n) = phi_old(n+1:2*n-1);
-%     phi(n+1) = u;
+%     % Est. Opt. Problem
+%     disp('DE Parameter Estimation Started')
+%     % attempting yalmip
+%     yalmip('clear')
+%     Alpha = sdpvar(m,1);
+% %     nu_alpha = sdpvar(2*n,1);
+%     
+%     Constraints = [sum(Alpha) == 1];
+% %     Constraints = [Constraints, nu_alpha == nuVector(Alpha)];
+%     for i = 1:m
+%         Constraints  = [Constraints, Alpha(i) >= 0];
+%     end
+%     
+%     Objective = (nu_hat - nu_alpha)' * inv(P) * (nu_hat - nu_alpha);
+%     
+%     options = sdpsettings();%'debug',1,'verbose',1)%,'solver','quadprog','quadprog.maxiter',100);
+%     
+%     sol = optimize(Constraints,Objective,options)
+%     
+%     
+% %     cvx_begin quiet
+% %         variable alpha_cvx(m,1)
+% %         nu_alpha = nu_alpha(alpha_cvx);
+% %         
+% %         % Minimize This
+% %         minimize((nu_hat - nu_alpha)' * inv(P) * (nu_hat - nu_alpha))
+% %         subject to
+% %             sum = 0;
+% %             for i = 1:m
+% %                 alpha_cvx(i) >= 0;
+% %                 sum = sum + alpha_cvx(i);
+% %             end
+% %             sum == 1;
+% %     cvx_end
+%     if sol.problem == 0
+%          % Extract and display value
+%          alpha_hat = value(Alpha) %alpha_cvx;
+%          nu_hat = value(nu_alpha)
+%     else
+%          disp('Hmm, something went wrong!');
+%          sol.info
+%          yalmiperror(sol.problem)
+%          error('issue here.....')
+%     end
     
     
     
+%     % k step
+%     P_old = P;
+%     phi_old = phi;
+%     nu_hat_old = nu_hat;
+% 
+% 
+% %     % k+1 step
+% %     phi(2:n) = phi_old(1:n-1);
+% %     phi(1) = y;
+% %     phi(n+2:2*n) = phi_old(n+1:2*n-1);
+% %     phi(n+1) = u;
+%     
+%     % Recursive Update
+%     P = (1/gamma)*P_old - (1/gamma)*(phi'...
+%         * inv(gamma + phi * P_old * phi') * phi * P_old);
+%     nu_hat = nu_hat_old + P * phi' * (y - phi*nu_hat_old);    
     
-    % Recursive Update
-    P = (1/gamma)*P_old - (1/gamma)*(phi'...
-        * inv(gamma + phi * P_old * phi') * phi * P_old);
-    nu_hat = nu_hat_old + P * phi' * (y - phi*nu_hat_old);
+    
+
     
     
 end

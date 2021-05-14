@@ -15,11 +15,18 @@
 \usepackage[margin=1in]{geometry}
 \usepackage{physics}
 \usepackage{amsmath, amsfonts, amssymb}
-%\usepackage{hyperref}
 \usepackage{nccmath}
 \usepackage{cuted}
 \usepackage{mathtools}
+\usepackage{hyperref}
+\usepackage{empheq}
+\usepackage{graphicx}
 
+% MATLAB Formating Code
+\usepackage[numbered,framed]{matlab-prettifier}
+\lstset{style=Matlab-editor,columns=fullflexible}
+\renewcommand{\lstlistingname}{Script}
+\newcommand{\scriptname}{\lstlistingname}
 
 
 
@@ -287,64 +294,57 @@ A simple DT Polyotopic Model taken from \cite{beelen2017joint} \ is defined by \
 \end{equation}
 with the output matrix $C = \mqty[0 &1]$, making the dimensions 
 
-
-
-
 \subsection{DE Implementation}
 %DE: \gamma = 0.9
-
-
+The Dual Estimate method was implemented as explained in Section \ref{sec:DE_method_opt_pblm} was then simulated. Untimely it was very difficult to find a solver that was consistent at solving and being robust for a wider array of starting positions for the second step. Eventually it was determined that using Yalmip directly to solve the parameter problem was more effective at converging. (This primarily occurred with the first step as the update for P could result in a negative semi-definite matrix) The 'forgetting factor' from the paper was used: $$\gamma = 0.9$$
 
 \subsection{EKF Implementation}
 %EKF: R = 0.01 and Q = \mqty[0_{n\cross n} & \\ &100 * I_{m\cross m}}]
+The Extended Kalmen Filter was implemented as well using the parameters from the paper:
+\begin{displaymath}
+	R = 0.01 \text{ and } Q = \mqty[0_{n\cross n} & \\ & 100 * I_{m \cross m}]
+\end{displaymath}
 
 
-
-\subsection{IMM Implementation}
-%IMM: p^{ii} = 0.99 ??????????? check paper
+%\subsection{IMM Implementation}
+%%IMM: p^{ii} = 0.99 ??????????? check paper
 
 
 
 
 \subsection{Recreated Results}
-% Just to recreate 
+The results from the original paper were recreated in MATLAB (\appendixname \ref{apx:MATLAB}). The input was selected as essentially a random PWM signal of strength $u_0 = 0.5$.
+Specifically, the actual system response is can be seen in \figurename \ \ref{fig:systemresponsenoattack}. Additionally, the response for the DE and EKF methods can be seen in \figurename \ \ref{fig:denoattack} \ and \figurename \ \ref{fig:ekfnoattack} \ respectively.
 
+\begin{figure}
+	\centering
+	\includegraphics[width=\linewidth]{../../fig/SystemResponse_no_attack}
+	\caption{Recreated System Results}
+	\label{fig:systemresponsenoattack}
+\end{figure}
 
+\begin{figure}
+	\centering
+	\includegraphics[width=\linewidth]{../../fig/DE_no_attack}
+	\caption{Recreated DE Simulated Results}
+	\label{fig:denoattack}
+\end{figure}
 
-
-
-
+\begin{figure}
+	\centering
+	\includegraphics[width=\linewidth]{../../fig/EKF_no_attack}
+	\caption{Recreated EKF Simulated Results}
+	\label{fig:ekfnoattack}
+\end{figure}
 
 %\newpage
 \section{Attack Implementation}
-
-
-
-
-
-
-
+The attacks for this system were essentially Gaussian Noise. In the future a more general model (preferably in Simulink) will be developed to test this on more complicated systems, but for now a simple Gaussian noise signal was generated and applied to the measurement each time-step.
 
 %\newpage
-\section{Results}
-
-
-
-
-
-
-
-%\newpage
-\section{Discussion}%Incorporate with results??????????
-
-
-
-
-
-
-
-%\newpage
-\section{Conclusion} %??????????????????????????
+\section{Results and Discussion}
+The results from the original paper were recreated in MATLAB (\appendixname \ref{apx:MATLAB}) and a complete collection of the plots can be seen attached in \appendixname \ref{apx:figs}. The input was selected as essentially a random PWM signal of strength $u_0 = 0.5$ and multiple power levels of gaussian (attack) noise were tested.\\
+A few important examples to look at are (as expected) the noise increases, the error increases for both of the methods of estimation. One big takaway can be seen in the ability for the EKF method to work better for really small deviations, but untimely, the state estimates are not stable and the error goes to infinity, while the DE method actually guarantees feasibility and convergence.
 
 
 
@@ -384,12 +384,116 @@ with the output matrix $C = \mqty[0 &1]$, making the dimensions
 %	\item Finally, an analysis of the reachable set deviation due to attacks will be performed by finding a minimal ellipsoid constraining the states that would be reachable prior to attack detection.\footnote{possibly future work}
 %\end{enumerate}
 
-\newpage
+%\newpage
 \bibliographystyle{ieeetr}
 \bibliography{mybib.bib}
 
+
+
+\onecolumn
 \newpage
 \appendix
-\section{MATLAB}\label{apx:MATLAB}
+\subsection{MATLAB}\label{apx:MATLAB}
+All code I wrote for this project can be found on my GitHub repository:\\
+\href{https://github.com/jonaswagner2826/DT_LPV_attack_analysis}{https://github.com/jonaswagner2826/DT\_LPV\_attack\_analysis}\\
+% DT_LPV_sim_script
+\lstinputlisting[caption={DT\_LPV\_sim\_script}]{../../DT_LPV_sim/DT_LPV_sim_script.m}
+\newpage
+% DT_LPV_sim_script
+\lstinputlisting[caption={alpha\_traj}]{../../DT_LPV_sim/alpha_traj.m}
+\newpage
+% DT_LPV_sim_script
+\lstinputlisting[caption={est\_DE}]{../../DT_LPV_sim/est_DE.m}
+\newpage
+% DT_LPV_sim_script
+\lstinputlisting[caption={est\_EKF}]{../../DT_LPV_sim/est_EKF.m}
+
+\subsection{Complete Set of Results} \label{apx:figs}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.7\linewidth]{../../fig/SystemResponse_attack_0_01}
+	\caption{$v_0 = 0.01$ System Results}
+	\label{fig:systemresponseattack001}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=\linewidth]{../../fig/DE_attack_0_01}
+	\caption{DE with $v_0 = 0.01$ Simulated Results}
+	\label{fig:deattack001}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=\linewidth]{../../fig/EKF_attack_0_01}
+	\caption{EKF with $v_0 = 0.01$ Simulated Results}
+	\label{fig:ekfattack001}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.7\linewidth]{../../fig/SystemResponse_attack_0_05}
+	\caption{$v_0 = 0.05$ System Results}
+	\label{fig:systemresponseattack005}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=\linewidth]{../../fig/DE_attack_0_05}
+	\caption{DE with $v_0 = 0.05$ Simulated Results}
+	\label{fig:deattack005}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=\linewidth]{../../fig/EKF_attack_0_05}
+	\caption{EKF with $v_0 = 0.05$ Simulated Results}
+	\label{fig:ekfattack005}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.7\linewidth]{../../fig/SystemResponse_attack_0_1}
+	\caption{$v_0 = 0.1$ System Results}
+	\label{fig:systemresponseattack01}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=\linewidth]{../../fig/DE_attack_0_1}
+	\caption{DE with $v_0 = 0.1$ Simulated Results}
+	\label{fig:deattack001}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=\linewidth]{../../fig/EKF_attack_0_1}
+	\caption{EKF with $v_0 = 0.1$ Simulated Results}
+	\label{fig:ekfattack01}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.7\linewidth]{../../fig/SystemResponse_attack_0_5}
+	\caption{$v_0 = 0.5$ System Results}
+	\label{fig:systemresponseattack05}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=\linewidth]{../../fig/DE_attack_0_5}
+	\caption{DE with $v_0 = 0.5$ Simulated Results}
+	\label{fig:deattack05}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=\linewidth]{../../fig/EKF_attack_0_5}
+	\caption{EKF with $v_0 = 0.5$ Simulated Results}
+	\label{fig:ekfattack05}
+\end{figure}
+
+
 
 \end{document}

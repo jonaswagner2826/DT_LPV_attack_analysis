@@ -55,29 +55,29 @@ function nu = nuVector(Alpha,A,B,C)
 %     nu = [fliplr(a_coeff(2:n+1)), fliplr(b_coeff(2:n+1))]';
 
 
-
-attempt1 = [
-    -((3*alpha2)/10 - (11*alpha1)/10 - alpha3/5 + alpha4/4 + 1),
-    -(11*alpha1*alpha2)/25 + (29*alpha1*alpha3)/100 - (9*alpha1*alpha4)/40 + (81*alpha2*alpha3)/100 - (33*alpha2*alpha4)/100 - (103*alpha3*alpha4)/200 - (71*alpha1^2)/400 + (49*alpha2^2)/100 + (31*alpha3^2)/80 + (49*alpha4^2)/200,
-    (alpha2 - (19*alpha1)/10 - (3*alpha3)/10 + (3*alpha4)/5 + 1),
-    (3*alpha1*alpha3)/5 - (3*alpha1*alpha2)/40 - (39*alpha1*alpha4)/100 + (13*alpha2*alpha3)/40 + (3*alpha2*alpha4)/5 - (11*alpha3*alpha4)/20 - (57*alpha1^2)/100 - (21*alpha2^2)/20 + (133*alpha3^2)/100 + (9*alpha4^2)/50
-    ];
-attempt2 = [
-    -(11*alpha1*alpha2)/25 + (29*alpha1*alpha3)/100 - (9*alpha1*alpha4)/40 + (81*alpha2*alpha3)/100 - (33*alpha2*alpha4)/100 - (103*alpha3*alpha4)/200 - (71*alpha1^2)/400 + (49*alpha2^2)/100 + (31*alpha3^2)/80 + (49*alpha4^2)/200,
-    -((3*alpha2)/10 - (11*alpha1)/10 - alpha3/5 + alpha4/4 + 1),
-    (3*alpha1*alpha3)/5 - (3*alpha1*alpha2)/40 - (39*alpha1*alpha4)/100 + (13*alpha2*alpha3)/40 + (3*alpha2*alpha4)/5 - (11*alpha3*alpha4)/20 - (57*alpha1^2)/100 - (21*alpha2^2)/20 + (133*alpha3^2)/100 + (9*alpha4^2)/50,
-    (alpha2 - (19*alpha1)/10 - (3*alpha3)/10 + (3*alpha4)/5 + 1)
-    ];
-attempt3 = [
-    -((3*alpha2)/10 - (11*alpha1)/10 - alpha3/5 + alpha4/4 + 1),
-    1,
-    (alpha2 - (19*alpha1)/10 - (3*alpha3)/10 + (3*alpha4)/5 + 1),
-    0
-    ];
+% 
+% attempt1 = [
+%     -((3*alpha2)/10 - (11*alpha1)/10 - alpha3/5 + alpha4/4 + 1);
+%     -(11*alpha1*alpha2)/25 + (29*alpha1*alpha3)/100 - (9*alpha1*alpha4)/40 + (81*alpha2*alpha3)/100 - (33*alpha2*alpha4)/100 - (103*alpha3*alpha4)/200 - (71*alpha1^2)/400 + (49*alpha2^2)/100 + (31*alpha3^2)/80 + (49*alpha4^2)/200;
+%     (alpha2 - (19*alpha1)/10 - (3*alpha3)/10 + (3*alpha4)/5 + 1);
+%     (3*alpha1*alpha3)/5 - (3*alpha1*alpha2)/40 - (39*alpha1*alpha4)/100 + (13*alpha2*alpha3)/40 + (3*alpha2*alpha4)/5 - (11*alpha3*alpha4)/20 - (57*alpha1^2)/100 - (21*alpha2^2)/20 + (133*alpha3^2)/100 + (9*alpha4^2)/50
+%     ];
+% attempt2 = [
+%     -(11*alpha1*alpha2)/25 + (29*alpha1*alpha3)/100 - (9*alpha1*alpha4)/40 + (81*alpha2*alpha3)/100 - (33*alpha2*alpha4)/100 - (103*alpha3*alpha4)/200 - (71*alpha1^2)/400 + (49*alpha2^2)/100 + (31*alpha3^2)/80 + (49*alpha4^2)/200;
+%     -((3*alpha2)/10 - (11*alpha1)/10 - alpha3/5 + alpha4/4 + 1);
+%     (3*alpha1*alpha3)/5 - (3*alpha1*alpha2)/40 - (39*alpha1*alpha4)/100 + (13*alpha2*alpha3)/40 + (3*alpha2*alpha4)/5 - (11*alpha3*alpha4)/20 - (57*alpha1^2)/100 - (21*alpha2^2)/20 + (133*alpha3^2)/100 + (9*alpha4^2)/50;
+%     (alpha2 - (19*alpha1)/10 - (3*alpha3)/10 + (3*alpha4)/5 + 1)
+%     ];
+% attempt3 = [
+%     -((3*alpha2)/10 - (11*alpha1)/10 - alpha3/5 + alpha4/4 + 1);
+%     1;
+%     (alpha2 - (19*alpha1)/10 - (3*alpha3)/10 + (3*alpha4)/5 + 1);
+%     0
+%     ];
 attempt4 = [
-    1,
-    -((3*alpha2)/10 - (11*alpha1)/10 - alpha3/5 + alpha4/4 + 1),
-    0,
+    1;
+    -((3*alpha2)/10 - (11*alpha1)/10 - alpha3/5 + alpha4/4 + 1);
+    0;
     (alpha2 - (19*alpha1)/10 - (3*alpha3)/10 + (3*alpha4)/5 + 1)
     ];
 
