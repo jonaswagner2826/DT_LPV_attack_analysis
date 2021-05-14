@@ -58,7 +58,12 @@ C = [1, 0]; D = 0;
 
 % Input
 T = 10;
-U = square((2*pi*K)/T);
+U = zeros(len(K));
+for i = int(K/T)
+    for j = 1:T
+        U(k) = square((2*pi*(T*i+j))/T);
+    end
+end
 
 % Scedule Parameter
 syms k_sym
@@ -73,12 +78,19 @@ alpha_hat_0 = [0.25; 0.25; 0.25; 0.25];
 
 
 
-
 %% Rough Simulation of the System
 % Sim Data
 X = zeros(n,k_max);
 Y = zeros(q, k_max);
 Alpha = zeros(m,k_max);
+
+% DE Data
+X_hat_DE = zeros(n,k_max;
+Alpha_hat_DE = zeros(m,k_max);
+P_data_DE = zeros(2*n,2*n,k_max);
+Phi = zeros(2*n,k_max);
+Nu_hat = zeros(2*n,k_max);
+
 % EKF Data
 X_hat_EKF = zeros(n,k_max);
 Alpha_hat_EKF = zeros(m,k_max);
@@ -91,35 +103,35 @@ x = x_0;
 % DE Initialization
 x_hat_DE = x_hat_0;
 alpha_hat_DE = alpha_hat_0;
-P_DE = randn(2*n); P_DE = P_DE*P_DE.' %random ??? or this rand one:
+P_DE = randn(2*n); P_DE = P_DE*P_DE.'; %random ??? or this rand one:
 % P_DE = [1.7552    1.7244    0.7521    0.4716;
 %         1.7244    4.3679   -0.4500   -0.7000;
 %         0.7521   -0.4500    3.5146    2.5992;
 %         0.4716   -0.7000    2.5992    1.9602];
 % nu_hat = randn(2*n,1); %random ??? or this rand one:
-nu_hat = [0.3; 0.2; 0.1; 0.4];
+nu_hat = [0.3; -0.2; 0.1; -0.4];
 % phi_hat = randn(2*n,1); %random ??? or this rand one: %[1.2424; -1.0667; 0.9337; 0.3503];
 phi = zeros(1,m);
 
 gamma = 0.9;
 
-Alpha_sym = sym('alpha',[m,1]);
-A_bar = zeros(n);
-B_bar = zeros(n,p);
-for i = 1:m
-    A_bar = A_bar + Alpha_sym(i) * A(:,:,i);
-    B_bar = B_bar + Alpha_sym(i) * B(:,:,i);
-end
-a_coeff = charpoly(A_bar);
-temp = sym('temp');
-b_coeff = charpoly(C*adjoint(temp*eye(n) - A_bar)*B_bar,;
-if size(a_coeff,2) <= n
-    a_coeff = [zeros(1,n+1-size(a_coeff,2)),a_coeff];
-end
-if size(b_coeff,2) <= n
-    b_coeff = [zeros(1,n+1-size(b_coeff,2)),b_coeff];
-end
-nu_alpha = matlabFunction([a_coeff(2:n+1), b_coeff(2:n+1)])%[fliplr(a_coeff(1:n)), fliplr(b_coeff(1:n))]');
+% Alpha_sym = sym('alpha',[m,1]);
+% A_bar = zeros(n);
+% B_bar = zeros(n,p);
+% for i = 1:m
+%     A_bar = A_bar + Alpha_sym(i) * A(:,:,i);
+%     B_bar = B_bar + Alpha_sym(i) * B(:,:,i);
+% end
+% a_coeff = charpoly(A_bar);
+% temp = sym('temp');
+% b_coeff = charpoly(C*adjoint(temp*eye(n) - A_bar)*B_bar);
+% if size(a_coeff,2) <= n
+%     a_coeff = [zeros(1,n+1-size(a_coeff,2)),a_coeff];
+% end
+% if size(b_coeff,2) <= n
+%     b_coeff = [zeros(1,n+1-size(b_coeff,2)),b_coeff];
+% end
+% nu_alpha = matlabFunction([fliplr(a_coeff(1:n)), fliplr(b_coeff(1:n))]');
 
 
 % EKF Initialization
@@ -132,7 +144,7 @@ R_EKF = 0.01;
 % IMM Initialization
 
 
-for k = K
+for k = K(1:100)
     % Plant Simulation
     alpha = alpha_traj(k);
     u = U(k);
@@ -145,12 +157,16 @@ for k = K
     
 
     % DE Method
+    if k >= 3
     disp(['DE Method: k = ', num2str(k)])
-    [x_hat_DE, alpha_hat_DE, P_DE, phi, nu_hat]...
+    Phi(:,k) = [Y(:,(k-1):(k-2)),U(((k-1):(k-2)))];
+    P_data_DE(:,:,k) = (1/gamma)*P_data_DE(:,:,k-1) - (1/gamma)*(phi'...
+        * (gamma + phi * P_data_DE(:,:,k-1) * phi')\(phi * P_data_DE(:,:,k-1)));
+    [x_hat_DE, alpha_hat_DE, nu_hat]...
                                 = est_DE(x_hat_DE, alpha_hat_DE, y, u,...
-                                           P_DE, phi, nu_hat,...
-                                           gamma, A, B, C,...
-                                           nu_alpha);
+                                           P_data_DE(:,:,k), Phi(:,k), nu_hat,...
+                                           gamma, A, B, C);
+    end
     % EKF Method
     disp(['EKF Method: k = ', num2str(k)])
     [x_hat_EKF, alpha_hat_EKF, P_EKF] = est_EKF(x_hat_EKF,...
@@ -188,7 +204,7 @@ sgtitle('DE')
 subplot(2,1,1)
 plot(X_hat_DE'-X(:,1:size(X_hat_DE,2))')
 subplot(2,1,2)
-plot(Alpha_hat_DE'-Alpha(:,1:size(Alpha_hat_DE,2))')
+plot(Alpha(:,1:size(Alpha_hat_DE,2))'-Alpha_hat_DE')%
 
 
 figure()
