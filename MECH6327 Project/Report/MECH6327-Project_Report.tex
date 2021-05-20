@@ -1,11 +1,11 @@
-%\documentclass[]{article}
+\documentclass[]{article}
 
 
 
 
 
 %Need to turn back into a two-column confrence paper for submission
-\documentclass[]{ieeetran}
+%\documentclass[]{ieeetran}
 
 
 
@@ -45,11 +45,11 @@ Examining Discrete-Time Polytopic Linear Parameter-Varying Systems under threat 
 \end{abstract}
 
 
-%\newpage
-%\tableofcontents
-%
-%
-%\newpage
+\newpage
+\tableofcontents
+
+
+\newpage
 \section{Polytopic Systems Background}
 Polytopic LPV system models are essentially a smooth interpolation of a set of LTI submodels constructed using a specified weighting function. This can be looked at as decomposing a system into multiple operating spaces that operate as linear submodels. It is possibile for a Polytopic model to take a complex nonlinear model and redefine it as a time-varying interpolation of multiple linear submodels.
 
@@ -95,7 +95,7 @@ The scheduling parameter, $\alpha \in \mathcal{A}$ is unknown and time-varying, 
 
 In the discrete time case, the unknown scheduling parameter, $\alpha$, is problematic for when developing a state-estimator, thus a Joint State-Parameter estimator must be used. The discrete nature of the measurements may also prove to be even more problematic if an attack is injected in any discrete measurement.
 
-%\newpage
+\newpage
 \section{Joint State-Parameter Estimation Problem}
 The problem of developing joint state and parameter estimator is defined as finding recursive update rules to ensure that state and parameter estimates approach the actual states and parameters. This can be described as finding $f_x$ and $f_\alpha$ such that
 \begin{equation}\label{eq:est_pblm_statement}
@@ -127,7 +127,7 @@ include:
 	\item Interacting Multiple Model estimation (IMM) method which uses a different kalmen filter for multiple modes and the probability that the system will be a certain mode.\cite{bar2004estimation}
 \end{enumerate}
 
-%\newpage
+\newpage
 \section{Kalmen Filter Derived Methods}
 \subsection{Extended Kalmen Filter (EKF) Method \cite{ekf_param_est}}
 The Extended Kalmen Filter (EKF) method relies on a prediction and update steps for both state and parameter estimates by augmenting the state with the parameters creating a nonlinear system.
@@ -172,7 +172,7 @@ This method is widely used and will converge when the state and parameter estima
 %The Intercting Multiple Model (IMM) method uses a individual kalmen filters for each modes and then determines the probability that the system will be a certain mode.
 
 
-%\newpage
+\newpage
 \section{DE Method Optimization Problem Definition and Solution \cite{beelen2017joint}} \label{sec:DE_method_opt_pblm}
 The primary optimization problems to be analyzed are the state and parameter estimation problems within the DE method. This method separates the joint-estimation problem into a state and then a parameter-estimation problem, each of which are determined using convex optimization techniques.
 
@@ -209,7 +209,7 @@ The ISS Lyapnov function is a function $V : \real^{n+m} \to \real$, such that $$
 \end{equation}
 for all $k \in \{0, \dots,N\}$.
 
-%\newpage
+\newpage
 \subsubsection{LMI Feasibility Problem for ISS}
 %%%% Insert Derivation from the theorem taken from Heemels 2010????
 A theorem provided in \cite{heemels2010} states that if there exists matrices $P_i,\ F_i,\ G_i,\ i \in \{1, \dots, m\}$ and a scaler $\zeta$ such that
@@ -252,7 +252,7 @@ with variables $a_i$ and $b_i$ being the coefficients from the polynomials
 which are in fact the transfer function coefficients for the system itself, \eqref{eq:DT_poly_sys_def}.\\
 It is also noteworthy that the optimization problem \eqref{eq:DE_param_opt_pblm_original} is a nonlinear (and possibly nonconvex) optimization problem, so instead of solving this directly, a two step approach can be taken to first solve for the coefficients in \eqref{eq:DE_param_poly} and then determining the scheduling parameter corresponding to those transfer function coefficients.
 
-%\newpage
+\newpage
 \subsubsection{Step 1: Determine Polynomial Coefficients}
 Determining the polynomial coefficients is a simple optimization problem consisting of an unconstrained linear least-squares optimization problem given by
 \begin{equation}\label{eq:DE_param_opt_pblm_pt1}
@@ -276,7 +276,7 @@ The optimal solution and resultant parameter estimates are equivalent to the opt
 
 
 
-%\newpage
+\newpage
 \section{Numerical Experimentation}
 
 \subsection{Simulation Implementation}

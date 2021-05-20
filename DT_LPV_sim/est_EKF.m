@@ -60,13 +60,13 @@ function [x_hat, alpha_hat, P] = est_EKF(x_hat, alpha_hat, P, y, u,...
     % Preditiction Step
     x_hat_pre = 0;
     for i = 1:m
-        x_hat_pre = x_hat_pre + alpha_hat(i) * (A(:,:,i) * x_hat + B(:,:,i) * u);
+        x_hat_pre = x_hat_pre + alpha_hat(i)*(A(:,:,i)*x_hat + B(:,:,i)*u);
     end
     alpha_hat_pre = alpha_hat;
     P_pre = A_hat * P * A_hat' + Q;
     
     % L (k) calc
-    C_hat = [C, zeros(1,m)];
+    C_hat = [C, zeros(q,m)];
     L = P_pre * C_hat' * inv(R + C_hat * P_pre * C_hat');
     
     % Update Step

@@ -2,8 +2,8 @@ function [x_hat, alpha_hat, nu_hat] ...
                                         = est_DE(x_hat, alpha_hat, y, u,...
                                            P, phi, nu_hat,...
                                            gamma, A, B, C)
-    %est_JSPE Function performs a single iteration of the joint state and
-    %parameter estimator
+    %est_DE Function performs a single iteration of the DE method state
+    %estimation
     
     arguments
         x_hat       %x_hat_{k-1}        (n,1)
@@ -47,6 +47,7 @@ function [x_hat, alpha_hat, nu_hat] ...
     % CVX Feasability Problem on LMI
     disp('DE State Estimation Started')
     tol = 1e-6;
+    cvx_clear
     cvx_begin sdp quiet
         variable P_cvx(n,n,m) symmetric
         variable F(n,q,m)
