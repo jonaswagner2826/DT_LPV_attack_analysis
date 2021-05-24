@@ -15,7 +15,7 @@ close all
 
 %% Settings
 generateModel = false;
-openModel = true;
+openModel = false;
 simulateModel = false;
 plotResults = false;
 
@@ -193,16 +193,16 @@ for k = K(1:100)
     Alpha(:,k) = alpha;
 
     %% State Estimation
-%     % DE Method
-%     if k >= 3
-%         disp(['DE Method: k = ', num2str(k)])
-%         P_DE_old = P_DE;
-%         P_DE = (1/gamma)*P_data_DE(:,:,k-1) - (1/gamma)*(phi'...
-%             * (gamma + phi * P_data_DE(:,:,k-1) * phi')^(-1)*(phi * P_data_DE(:,:,k-1)));
-%         if any(eig(inv(P_DE)) < 0)
-%             warning('INV(P_DE) not PSD')
-%         end
-%     end
+    % DE Method
+    if k >= 3
+        disp(['DE Method: k = ', num2str(k)])
+        P_DE_old = P_DE;
+        P_DE = (1/gamma)*P_data_DE(:,:,k-1) - (1/gamma)*(phi'...
+            * (gamma + phi * P_data_DE(:,:,k-1) * phi')^(-1)*(phi * P_data_DE(:,:,k-1)));
+        if any(eig(inv(P_DE)) < 0)
+            warning('INV(P_DE) not PSD')
+        end
+    end
     
     phi_old = phi;
     phi(2:n,:,:) = phi_old(1:n-1,:,:);
